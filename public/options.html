@@ -1,0 +1,262 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Google Analytics URL Builder</title>
+	<link rel="stylesheet" href="styles/styles.css" />
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet">
+	<script src="scripts/error-handler.js"></script>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<script src="scripts/underscore-min.js"></script>
+	<script src="scripts/date.js"></script>
+	<script src="scripts/BlobBuilder.js"></script>
+	<script src="scripts/FileSaver.js"></script>
+	<script src="scripts/options.js"></script>
+	<script src="scripts/analytics.js"></script>
+	<script src="scripts/knockout-3.4.2.js"></script>
+	<script src="scripts/knockout-secure-binding.min.js"></script>
+	<script src="scripts/knockout.mapping-latest.js"></script>
+</head>
+<body>
+
+
+	<div class="main">
+		<div class="header">
+			<h1>Google Analytics URL Builder</h1>
+		</div>
+		<div class="container">
+			<div class="sidebar">
+				<ul>
+					<li class="active"><a href="#settings"><img src="images/sun.svg" alt="Sun"><span class="sidebar-text">Settings</span></a></li>
+					<li><a href="#preset"><img src="images/preset.svg" alt="Preset"><span class="sidebar-text">Preset Editor</span></a></li>
+					<li><a href="#shortening"><img src="images/short.svg" alt="Short"><span class="sidebar-text">Shortening Service Setup</span></a></li>
+					<!-- <li><a href="#subscribe"><img src="images/subscribe.svg" alt="Subscribe">Subscribe for updates</a></li> -->
+					<!-- <li><a href="#howToUse"><img src="images/video.svg" alt="Video">How to Use</a></li> -->
+					<!-- <li><a href="#FAQ"><img src="images/support.svg" alt="Support">F.A.Q</a></li> -->
+					<li><a href="#support"><img src="images/support.svg" alt="Support"><span class="sidebar-text">Support</span></a></li>
+					<li><a href="#docked" class="dockLink"><img src="images/external-link.svg" alt="Docked version"><span class="sidebar-text">Docked version</span></a></li>
+				</ul>
+			</div>
+			<div class="content">
+				<span class="anchor" id="settings"></span>
+				<div class="section first">
+					<h2>
+						<img src="images/sun.svg" alt="Settings">Settings
+					</h2>
+					<p class="lowercase-paragraph">Force Lowercase on final URL:</p>
+					<div class="switcher lowercase">
+						<div class="btn" data-val="true">On</div>
+						<div class="btn" data-val="false">Off</div>
+					</div>
+				</div>
+				<span class="anchor" id="preset"></span>
+				<div class="section">
+					<h2>
+						<img src="images/preset.svg" alt="Preset">Preset Editor
+					</h2>
+					<p>If you wish to tag much more faster, you can easily create presets.</p>
+					<ul><li>1. Give each preset a nice catchy name (i.e. "My Facebook page", "my boss twitter" etc.)</li><li>2. You can choose a default preset so it will be chosen automatically each time you open the extension popup.</li><li>3. Tagging is case-sensitive. Make sure you're keeping a standard ('Facebook' does not equal 'facebook')</li></ul>
+					<div class="table-widget">
+						<h3>Preset list</h3>
+						<a href="#" class="btn btn__blue" data-bind="click: addSet, visible: canChangeState">+ Add Preset</a>
+						<div class="table-wrap">
+							<table id="quicksets">
+								<thead>
+									<tr>
+										<th>Set Name*</th>
+										<th>Source</th>Source*
+										<th>Medium</th>
+										<th>Term</th>
+										<th>Content</th>
+										<th>Campaign</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach: sets">
+									<tr data-bind="visible: mode()!='edit', css: { active: isDefault }">
+										<td data-bind="text: combinationName"></td>
+										<td data-bind="text: source"></td>
+										<td data-bind="text: medium"></td>
+										<td data-bind="text: term"></td>
+										<td data-bind="text: content"></td>
+										<td data-bind="text: campaign"></td>
+										<td>
+											<div class="actions">
+												<!-- ko if: isDefault -->
+												Default
+												<!-- /ko -->
+												<a data-bind="click: $parent.makeDefault, visible: $parent.canChangeState() && !isDefault()">Set default</a>
+												<img src="images/trash.png" alt="Trash" data-bind="click: $parent.deleteSet, visible: $parent.canChangeState">
+												<img src="images/edit-f.svg" alt="Edit" data-bind="click: $parent.editSet, visible: $parent.canChangeState">
+											</div>
+										</td>
+									</tr>
+									<tr class="editing" data-bind="visible: mode()=='edit'">
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: combinationName" />
+											</span>
+										</td>
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: source" />
+											</span>
+										</td>
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: medium" />
+											</span>
+										</td>
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: term" />
+											</span>
+										</td>
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: content" />
+											</span>
+										</td>
+										<td>
+											<span class="input-wrap">
+												<input type="text" data-bind="value: campaign" />
+											</span>
+										</td>
+										<td>
+											<div class="actions">
+												<img src="images/allow.svg" title="Save" class="small-img" data-bind="click: $parent.save">
+												<img src="images/cancel.svg" title="Cancel" class="small-img" data-bind="click: $parent.cancel">
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+						<h3>Backup/Share Presets</h3>
+						<p>
+							You can backup your presets if you wish to move the presets to different computer or just to share with your colleagues. <b>Please note:</b> Restoring the presets from the backup file, will overwrite your current preset list.
+						</p>
+						<a href="#" id="backupFile" class="btn"><img src="images/export.svg" alt="Export">Backup</a>
+						<a href="#" id="fileSelect" class="btn"><img src="images/import.svg" alt="Import">Restore</a>
+						<input type="file" class="restore" id="fileElem" />
+					</div>
+				</div>
+				<span class="anchor" id="shortening"></span>
+				<div class="section shortening-section">
+					<h2>
+						<img src="images/short.svg" alt="Short">URL shortening configuration
+					</h2>
+					<p>Please choose Bit.ly. Goo.gl will shutdown at the end of March 2019</p>
+					<br>
+					<!--<div class="switcher short">
+						<div class="btn" data-val="bitly">Bitly</div>
+						<div class="btn" data-val="google">Google</div>
+					</div>-->
+					<div id="bitlySection">
+						<h3>Bit.ly Configuration</h3>
+						<p>
+							To make Bit.ly work, please click the "Enable" button and follow the instructions. It's 100% secured and private, and we cannot access your Bit.ly data, since we don't have any server side for this extension.
+						</p>
+						<a id="btnEnableBitly" class="btn btn-default">Enable</a>
+						<a id="btnEnabledBitly" class="btn btn-success disabled"><img src="images/allow-white.svg" alt="Allow">Enabled</a>
+						<a id="btnRevokeBitly" class="btn btn-default disabled"><img src="images/cancel.svg" alt="Cancel">Revoke</a>
+					</div>
+					<div id="googleSection">
+						<h3>Google shortening Configuration</h3>
+						<p style='color:red'>
+							[Google shutdowns Goo.gl in March 31, 2019. Use Bit.ly instead]
+						</p>
+						<!--<a id="btnEnableGoogle" class="btn btn-default">Enable</a>
+						<a id="btnEnabledGoogle" class="btn btn-success disabled"><img src="images/allow-white.svg" alt="Allow">Enabled</a>-->
+						<a id="btnRevokeGoogle" class="btn btn-default"><img src="images/cancel.svg" alt="Cancel">Revoke</a>
+					</div>
+				</div>
+				<!-- <span class="anchor" id="subscribe"></span>
+				<div class="section">
+					<h2><img src="images/subscribe.svg" alt="Subscribe">Subscribe for updates
+					</h2>
+					<p>
+						To provide proper credit, use the embedded credit already in the icon you downloaded,
+						or you can copy the line above and add it to your citations, about page, or place in which
+						you would credit work you did not create
+					</p>
+					<form action="https://themarketingcode.us11.list-manage.com/subscribe/post?u=6db4a5b5ef212eb0871d2fc5f&amp;id=9f937c4311" method="post" target="_blank">
+						<label>
+							Your Email Address
+							<span class="input-wrap">
+								<input type="email" name="EMAIL"/>
+							</span>
+						</label>
+						<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_6db4a5b5ef212eb0871d2fc5f_9f937c4311" tabindex="-1" value=""></div>
+						<button type="submit" value="Subscribe" name="subscribe" class="btn"><img src="images/email.svg" alt="Email">Send</button>
+					</form>
+				</div> -->
+				<!-- <span class="anchor" id="howToUse"></span>
+				<div class="section">
+					<h2><img src="images/video.svg" alt="Video">How to use this extension with Google Analytics
+					</h2>
+					<p>
+						To provide proper credit, use the embedded credit already in the icon you downloaded, or you can
+						copy the line above and add it to your citations, about page, or place in which you would credit
+						work you did not create
+					</p>
+					<a href="#" class="btn"><img src="images/play.svg" alt="Play">Play Movie</a>
+				</div> -->
+				<span class="anchor" id="support"></span>
+				<div class="section" id="supportSection">
+					<h2>
+						<img src="images/support.svg" alt="Support">Support
+					</h2>
+					<p>
+						If you didn't find the answer in the FAQ section below, please contact us at <a href="mailto:info@quickwin.co.il?Subject=URL%20Builder%20Support" target="_blank">info@quickwin.co.il</a>
+					</p>
+
+				</div>
+				<span class="anchor" id="FAQ"></span>
+				<div class="section" id="faq">
+					<h2>
+						<img src="images/support.svg" alt="Support">F.A.Q
+					</h2>
+					<p>
+						<h5><span style="font-weight:bold;">Q: The form is not working. Can't edit anything</span></h5>
+						<h5><span style="font-weight:bold;">A:</span> Chrome has some issues with form-based extensions. Re-installing the extension solves 99.99% of such issues</h5>
+						<br />
+						<h5><span style="font-weight:bold;">Q: My Bit.ly is not working</span></h5>
+						<h5><span style="font-weight:bold;">A:</span> Bit.ly works only for Bit.ly registered users. Scroll up a bit on this page, choose Bit.ly as your default shortening service, click the "Enable" button and follow the insturctions.</h5>
+						<br />
+						<h5><span style="font-weight:bold;">Q: My Goo.gl is not working</span></h5>
+						<h5><span style="font-weight:bold;">A:</span> Goo.gl shortening service is about to be retired. It works for registered users, but you cannot use it as new user. Please switch to Bit.ly.</h5>
+						<br />
+						<h5><span style="font-weight:bold;">Q: I hate it when the popup close each time I switch tab. How can I force it to stay open?</span></h5>
+						<h5><span style="font-weight:bold;">A:</span> Use the <a href="chrome-extension://gaidpiakchgkapdgbnoglpnbccdepnpk/dock.html">docked version</a>.</h5>
+						<br />
+						<h5>
+							<span style="font-weight:bold;">
+								Q: My presets includes dynamic parameters which includes characters like {{
+ or }. Somehow, the final link contains weird characters like %7B. Will it still work?</span></h5>
+					 <h5><span style="font-weight:bold;">A:</span> Yes. Don't worry.</h5>
+					 <br/>
+					 <h5><span style="font-weight:bold;">Q: Is this extension private? Where do you keep all the data?</span></h5>
+					 <h5><span style="font-weight:bold;">A:</span> We don't have any server side or database for this extension, hence, everything happens and stays in your Chrome browser. We do not collect, store, share or accessing your private data. We DO have Google Analytics installed on the extension to track the performance and detecting bugs. It does not collect private or personalized data.</h5>
+					 <br/>
+					 <h5><span style="font-weight:bold;">Q: I gave you access to my Bit.ly/Goo.gl account. Can you see my short links and statistics?</span></h5>
+					 <h5><span style="font-weight:bold;">A:</span> No. You didn't gave "us" the credentials. You gave it to the extension and the keys are stored on your Chrome. Only the extension can access it. We can't.</h5>
+					 <br/>
+					 <h5><span style="font-weight:bold;">Q: I wish to disconnct myself from this extension and be forgotten. How can I do that?</span></h5>
+					 <h5><span style="font-weight:bold;">A:</span> Just uninstall the extension.</h5>
+					 <br/>
+					 <h5><span style="font-weight:bold;">Q: Can I suggest features?</span></h5>
+					 <h5><span style="font-weight:bold;">A:</span> Yes you can! send us an email here - <a href="mailto:info@quickwin.co.il?Subject=URL%20Builder%20Support" target="_blank">info@quickwin.co.il</a></h5>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="copyright">
+				<a href="https://www.quickwin.io/?utm_source=Extension&utm_medium=builder&utm_campaign=Extension" target="_blank">Quickwin LTD</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

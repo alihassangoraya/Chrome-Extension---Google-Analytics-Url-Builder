@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="41.833px" height="36.956px" viewBox="0 0 41.833 36.956" enable-background="new 0 0 41.833 36.956" xml:space="preserve">
+<g>
+	<defs>
+		<rect id="SVGID_1_" width="41.833" height="36.956"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+</g>
+<g>
+	<defs>
+		<rect id="SVGID_3_" width="41.833" height="36.956"/>
+	</defs>
+	<clipPath id="SVGID_4_">
+		<use xlink:href="#SVGID_3_"  overflow="visible"/>
+	</clipPath>
+</g>
+<g>
+	<defs>
+		<rect id="SVGID_5_" width="41.833" height="36.956"/>
+	</defs>
+	<clipPath id="SVGID_6_">
+		<use xlink:href="#SVGID_5_"  overflow="visible"/>
+	</clipPath>
+	<path clip-path="url(#SVGID_6_)" d="M37.941,0c2.14,0,3.892,1.752,3.892,3.891v19.458c0,2.139-1.752,3.892-3.892,3.892h-4.362
+		l0.882,8.649c0.035,0.392-0.192,0.794-0.547,0.964c-0.354,0.171-0.811,0.099-1.095-0.174l-9.471-9.439h-3.405v1.49
+		c0,1.587-1.315,2.888-2.903,2.888H9.729L4.575,36.68c-0.292,0.288-0.776,0.361-1.139,0.17c-0.363-0.192-0.577-0.633-0.503-1.036
+		l0.745-4.195H2.903C1.315,31.618,0,30.317,0,28.73v-9.304c0-1.587,1.315-2.888,2.903-2.888h2.934V3.891
+		C5.837,1.752,7.589,0,9.729,0H37.941z M37.941,1.945H9.729c-1.095,0-1.946,0.851-1.946,1.946v19.458
+		c0,1.095,0.851,1.945,1.946,1.945h14.016c0.252,0,0.503,0.1,0.685,0.274l7.828,7.798l-0.729-7.008
+		c-0.051-0.539,0.432-1.066,0.973-1.064h5.441c1.096,0,1.946-0.851,1.946-1.945V3.891C39.888,2.796,39.037,1.945,37.941,1.945
+		 M5.837,18.484H2.903c-0.548,0-0.958,0.411-0.958,0.942v9.304c0,0.531,0.41,0.941,0.958,0.941h1.931
+		c0.565,0,1.054,0.583,0.957,1.141l-0.41,2.356l3.268-3.223c0.181-0.175,0.432-0.276,0.684-0.274h7.707
+		c0.548,0,0.958-0.41,0.958-0.941v-1.49h-8.27c-2.139,0-3.891-1.753-3.891-3.892V18.484z"/>
+</g>
+</svg>
